@@ -9,9 +9,16 @@
 typedef struct ConfigFile ConfigFile;
 typedef struct dirent dirent;
 
+typedef enum jumpscareType {
+    JUMPSCARE_FLASH = 25,
+    JUMPSCARE_ZOOM = 20,
+    JUMPSCARE_EPILEPSY = 10,
+    JUMPSCARE_NORMAL = 45
+} jumpscareType;
+
 int main () {
     srand(time(NULL));
-    double probability = (1.0/6.0) * 100;
+    int jumpscareProbability = 25;
     bool isJumpscare = false; //flag condition for jumpscare
     char currImg;
     ConfigFile config;
@@ -20,10 +27,8 @@ int main () {
     dirent *dp;
 
     if ((dir = opendir(config.imageDir)) == NULL) {
-        perror("opendir(config.imageDir) == NULL\n");
+        perror("opendir(config.imageDir) == NULL\n"); //check if directory exists
     }
-
-
 
     while ((dir = opendir(config.imageDir)) != NULL) { //open directory stream
         int index = 0;
@@ -40,7 +45,22 @@ int main () {
                 }
                 if (!notImg) {
                     printf("%s\n", currFile->d_name);
-                    if ((double)currChange <= probability) {
+                    if (currChange <= jumpscareProbability) {
+                        jumpscareType type;
+                        int typeProbability = rand() % 100;
+                        if (typeProbability <= JUMPSCARE_EPILEPSY) {
+                            type = JUMPSCARE_EPILEPSY;
+                            printf("epilepsy\n");
+                        } else if (typeProbability <= JUMPSCARE_ZOOM) {
+                            type = JUMPSCARE_ZOOM;
+                            printf("zoom\n");
+                        } else if (typeProbability <= JUMPSCARE_FLASH) {
+                            type = JUMPSCARE_FLASH;
+                            printf("flash\n");
+                        } else {
+                            type = JUMPSCARE_NORMAL;
+                            printf("normal :(\n");
+                        }
                         isJumpscare = true; //activate jumpscare
                     }
                     isJumpscare = false; //reset jumpscare
