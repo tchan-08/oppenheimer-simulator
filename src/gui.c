@@ -58,8 +58,8 @@ void guiWindowShowImage(struct GuiWindow *window,
   SDL_Rect texr;
   texr.x = 0;
   texr.y = 0;
-  texr.w = 200;
-  texr.h = 200;
+  texr.w = state->width;
+  texr.h = state->height;
 
   SDL_RenderClear(window->renderer);
   SDL_RenderCopy(window->renderer, state->texture, NULL, &texr);
@@ -80,7 +80,7 @@ int main(void) {
     return 1;
   }
 
-  if (guiStateLoadImage(&state, window.renderer, "oppenheimer.jpg") !=
+  if (guiStateLoadImage(&state, window.renderer, "assets/oppenheimer.jpg") !=
       GUI_LOAD_IMAGE_SUCCESS) {
     return 1;
   }

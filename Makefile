@@ -1,5 +1,5 @@
 CFLAGS=-g -Wall -Wextra
-LIBS=-lm -lSDL2_mixer -lSDL2
+LIBS=-lm $$(pkg-config --cflags --libs sdl2 SDL2_image SDL2_mixer)
 
 oppenheimer-simulator : src/main.o src/config.o
 	$(CC) -o $@ $^ $(LIBS)
