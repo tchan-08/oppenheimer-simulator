@@ -22,14 +22,17 @@ int main () {
         perror("opendir(config.imageDir) == NULL\n");
     }
 
+
+
     while ((dir = opendir(config.imageDir)) != NULL) { //open directory stream
         int index = 0;
         while (index <= 1024) {
             struct dirent *currFile = readdir(dir); //read directory stream, get pointer to image
-            printf("got file success");
+            printf("got file success\n");
 
             if (currFile != NULL) { //not the end of the directory
                 int currChange = rand() % 100;
+                printf("%s\n", currFile->d_name);
                 if ((double)currChange <= probability) {
                     isJumpscare = true; //activate jumpscare
                 }
@@ -38,7 +41,7 @@ int main () {
             }
 
             if (currFile == NULL) {
-                printf("reset dir position back to beginning");
+                printf("reset dir position back to beginning\n");
                 rewinddir(dir); //reset directory stream as we reached the end of the dir
             }
 
