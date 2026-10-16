@@ -3,5 +3,6 @@
 typedef ConfigFile ConfigFile;
 
 int main () {
+    double probability = 1/6;
     ConfigFile config;
 }
