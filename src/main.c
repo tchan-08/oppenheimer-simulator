@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <dirent.h>
 #include <stdbool.h>
+#include <unistd.h>
 #include "config.h"
 
 typedef struct ConfigFile ConfigFile;
@@ -24,7 +25,7 @@ int main () {
     while ((dir = opendir(config.imageDir)) != NULL) { //open directory stream
         int index = 0;
         while (index <= 1024) {
-            int currFile = readdir(dir); //read directory stream, get pointer to image
+            struct dirent *currFile = readdir(dir); //read directory stream, get pointer to image
             printf("got file success");
 
             if (currFile != NULL) { //not the end of the directory
@@ -40,6 +41,8 @@ int main () {
                 printf("reset dir position back to beginning");
                 rewinddir(dir); //reset directory stream as we reached the end of the dir
             }
+
+            sleep(3); //delay 1.5 seconds!!!
         }
     }
 }
