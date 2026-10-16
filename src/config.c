@@ -47,6 +47,9 @@ int parseConfig(struct ConfigFile *config) {
 		if (strcmp(key,"image_dir") == 0) {
 			snprintf(config->imageDir,sizeof(config->imageDir),"%s",value);
 		}
+		if (strcmp(key,"interval") == 0) {
+			config->interval = strtol(value,NULL,10);
+		}
 		//next iteration
 		line = newline;
 	}
