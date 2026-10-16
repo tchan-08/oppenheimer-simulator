@@ -1,5 +1,5 @@
 CFLAGS=-g -Wall -Wextra
-LIBS=-lm
+LIBS=-lm -lSDL2_mixer -lSDL2
 
 oppenheimer-simulator : src/main.o src/config.o
 	$(CC) -o $@ $^ $(LIBS)
