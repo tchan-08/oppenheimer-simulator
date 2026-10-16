@@ -6,7 +6,7 @@
 struct ConfigFile {
 	char imageDir[1024]; //the directory with all the images in it
 	time_t interval;
-}
+};
 
 /*
 int main() {
