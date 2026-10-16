@@ -11,7 +11,7 @@ typedef struct dirent dirent;
 
 int main () {
     srand(time(NULL));
-    double probability = 1/6 * 100;
+    double probability = (1.0/6.0) * 100;
     bool isJumpscare = false; //flag condition for jumpscare
     char currImg;
     ConfigFile config;
