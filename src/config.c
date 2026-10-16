@@ -33,7 +33,8 @@ int parseConfig(struct ConfigFile *config) {
 		//split by lines
 		char *newline = strchr(line,'\n');
 		if (newline != NULL) {
-			newline = '\0';
+			newline++;
+			newline[-1] = '\0';
 		}else {
 			newline += strlen(newline);
 		}
