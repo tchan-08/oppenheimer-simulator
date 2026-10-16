@@ -3,6 +3,7 @@
 #include <dirent.h>
 #include <stdbool.h>
 #include <unistd.h>
+#include <string.h>
 #include "config.h"
 
 typedef struct ConfigFile ConfigFile;
@@ -29,23 +30,31 @@ int main () {
         while (index <= 1024) {
             struct dirent *currFile = readdir(dir); //read directory stream, get pointer to image
             printf("got file success\n");
-
+            bool notImg = false;
             if (currFile != NULL) { //not the end of the directory
                 int currChange = rand() % 100;
-                printf("%s\n", currFile->d_name);
-                if ((double)currChange <= probability) {
-                    isJumpscare = true; //activate jumpscare
+                printf("%d, %d\n", strcmp(currFile->d_name, "."), strcmp(currFile->d_name, ".."));
+                if (strcmp(currFile->d_name, ".") == 0 || strcmp(currFile->d_name, "..") == 0) {
+                    printf("Not an image\n");
+                    notImg = true;
                 }
-                isJumpscare = false; //reset jumpscare
-                index = (index + 1) % 1025; //increment photo index (with wrap around)
+                if (!notImg) {
+                    printf("%s\n", currFile->d_name);
+                    if ((double)currChange <= probability) {
+                        isJumpscare = true; //activate jumpscare
+                    }
+                    isJumpscare = false; //reset jumpscare
+                    index = (index + 1) % 1025; //increment photo index (with wrap around)
+                }
             }
 
             if (currFile == NULL) {
                 printf("reset dir position back to beginning\n");
                 rewinddir(dir); //reset directory stream as we reached the end of the dir
             }
-
-            sleep(3); //delay 1.5 seconds!!!
+            if (!notImg) {
+                sleep(3); //delay 3 seconds!!!
+            }
         }
     }
 }
