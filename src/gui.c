@@ -55,17 +55,25 @@ enum GuiInitWindowResult guiWindowInit(struct GuiWindow *window) {
 
 void guiWindowShowImage(struct GuiWindow *window,
                         const struct GuiState *state) {
-  SDL_Rect texr;
-  texr.x = 0;
-  texr.y = 0;
-  texr.w = state->width;
-  texr.h = state->height;
+  // TODO: get width and height of window
+  // TODO: centre image
+
+  int window_width;
+  int window_height;
+  SDL_GetWindowSize(window->window, &window_width, &window_height);
+
+  SDL_Rect imageRect;
+  imageRect.x = (window_width - state->width) / 2;
+  imageRect.y = (window_height - state->height) / 2;
+  imageRect.w = state->width;
+  imageRect.h = state->height;
 
   SDL_RenderClear(window->renderer);
-  SDL_RenderCopy(window->renderer, state->texture, NULL, &texr);
+  SDL_RenderCopy(window->renderer, state->texture, NULL, &imageRect);
   SDL_RenderPresent(window->renderer);
 }
 
+// TODO: put this in the main main
 int main(void) {
   struct GuiState state;
   struct GuiWindow window;
