@@ -53,7 +53,7 @@ int main () {
                 rewinddir(dir); //reset directory stream as we reached the end of the dir
             }
             if (!notImg) {
-                sleep(3); //delay 3 seconds!!!
+                sleep(config.interval);
             }
         }
     }
