@@ -1,6 +1,7 @@
 #include "gui.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <stdbool.h>
 #include <stddef.h>
 
 void guiStateInit(struct GuiState *state) {
@@ -35,7 +36,7 @@ enum GuiInitSdlResult guiSdlInit() {
 
 enum GuiInitWindowResult guiWindowInit(struct GuiWindow *window) {
   window->window =
-      SDL_CreateWindow("Hello SDL2", SDL_WINDOWPOS_UNDEFINED,
+      SDL_CreateWindow("Oppenheimer Simulator", SDL_WINDOWPOS_UNDEFINED,
                        SDL_WINDOWPOS_UNDEFINED, 640, 480, SDL_WINDOW_SHOWN);
   if (window->window == NULL) {
     return GUI_INIT_WINDOW_WINDOW_ERROR;
@@ -53,20 +54,29 @@ enum GuiInitWindowResult guiWindowInit(struct GuiWindow *window) {
   return GUI_INIT_WINDOW_SUCCESS;
 }
 
+#define GUI_MIN(a, b) ((a < b) ? (a) : (b))
+#define GUI_WINDOW_PADDING 50
+
 void guiWindowShowImage(struct GuiWindow *window,
                         const struct GuiState *state) {
-  // TODO: get width and height of window
-  // TODO: centre image
-
   int window_width;
   int window_height;
   SDL_GetWindowSize(window->window, &window_width, &window_height);
 
+  int viewport_width = window_width - GUI_WINDOW_PADDING;
+  int viewport_height = window_height - GUI_WINDOW_PADDING;
+
+  double scale = GUI_MIN((double)viewport_width / (double)state->width,
+                         (double)viewport_height / (double)state->height);
+
+  int scaled_width = (int)((double)state->width * scale);
+  int scaled_height = (int)((double)state->height * scale);
+
   SDL_Rect imageRect;
-  imageRect.x = (window_width - state->width) / 2;
-  imageRect.y = (window_height - state->height) / 2;
-  imageRect.w = state->width;
-  imageRect.h = state->height;
+  imageRect.x = (window_width - scaled_width) / 2;
+  imageRect.y = (window_height - scaled_height) / 2;
+  imageRect.w = scaled_width;
+  imageRect.h = scaled_height;
 
   SDL_RenderClear(window->renderer);
   SDL_RenderCopy(window->renderer, state->texture, NULL, &imageRect);
@@ -95,12 +105,17 @@ int main(void) {
 
   guiWindowShowImage(&window, &state);
 
-  int quit = 0;
+  bool quit = false;
   SDL_Event e;
   while (!quit) {
     while (SDL_PollEvent(&e)) {
       if (e.type == SDL_QUIT)
-        quit = 1;
+        quit = true;
+      if (e.type == SDL_WINDOWEVENT &&
+          e.window.event == SDL_WINDOWEVENT_RESIZED)
+        guiWindowShowImage(&window, &state);
+      if (e.type == SDL_KEYDOWN && e.key.keysym == ' ') {
+      }
     }
   }
 
