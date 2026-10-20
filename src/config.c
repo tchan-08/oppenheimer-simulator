@@ -42,7 +42,7 @@ int parseConfig(struct ConfigFile *config) {
 			newline++;
 			newline[-1] = '\0';
 		}else {
-			newline += strlen(newline);
+			newline = line + strlen(line);
 		}
 		//split by =
 		char *equals = strchr(line,'=');
