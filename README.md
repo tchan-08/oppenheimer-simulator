@@ -16,3 +16,7 @@ a program that runs in the background and occasionally creates a window with an 
 
 # Credits
 
+- HARRY 'OPPENHEIMER' STEVENS
+- TINRON CHAN
+- ALAN RANDON
+- TOM OBUNGU
