@@ -41,6 +41,8 @@ int main () {
         return EXIT_FAILURE;
     }
     guiWindowShowImage(&window, &state);
+	//============ custom events ============
+	Uint32 JUMPSCARE = SDL_RegisterEvents(1);
 	//============ mainloop ============
     int quit = 0;
     SDL_Event e;
@@ -56,7 +58,23 @@ int main () {
 				quit = 1;
 			}
 			//============ should we jumpscare ============
-			continue;
+			if (event.type == JUMPSCARE) {
+				switch (event.user.code) {
+					case JUMPSCARE_NORMAL:
+						//normal
+						break;
+					case JUMPSCARE_EPILEPSY:
+						//epilepsy
+						break;
+					case JUMPSCARE_FLASH:
+						//flash
+						break;
+					case JUMPSCARE_ZOOM:
+						//flash
+						break;
+				}
+				SDL_PollEvent(&event); //advance queue
+			}
 			//============ read the directory to pick an image ============
 			int jumpscareProbability = 25;
 			bool isJumpscare = false; //flag condition for jumpscare
@@ -82,22 +100,25 @@ int main () {
 						if (!notImg) {
 							printf("%s\n", currFile->d_name);
 							if (currChange <= jumpscareProbability) {
+								SDL_Event jumpscareEvent = {0};
+								jumpscareEvent.type = JUMPSCARE;
 								//the GUI should activate jumpscare on this if-else condition
 								int typeProbability = rand() % 100;
 								if (typeProbability <= config.chanceEpilepsy) {
+									jumpscareEvent.user.code = JUMPSCARE_EPILEPSY;
 									printf("epilepsy\n");
 								} else if (typeProbability <= config.chanceZoom) {
-
+									jumpscareEvent.user.code = JUMPSCARE_ZOOM;
 									printf("zoom\n");
 								} else if (typeProbability <= config.chanceFlash) {
+									jumpscareEvent.user.code = JUMPSCARE_FLASH;
 									printf("flash\n");
-								} else {
-									//config.chanceNormal
+								} else {	
+									jumpscareEvent.user.code = JUMPSCARE_NORMAL;
 									printf("normal :(\n");
 								}
-								isJumpscare = true; //activate jumpscare
+								SDL_PushEvent(&jumpscareEvent); //push jumpscare
 							}
-							isJumpscare = false; //reset jumpscare
 							index = (index + 1) % 1025; //increment photo index (with wrap around)
 						}
 					}
