@@ -74,19 +74,17 @@ int main () {
                     if (!notImg) {
                         printf("%s\n", currFile->d_name);
                         if (currChange <= jumpscareProbability) {
-                            jumpscareType type; //THIS IS TEMPORARY UNTIL ALAN IMPLEMENTS TYPES IN GUI
+                            //the GUI should activate jumpscare on this if-else condition
                             int typeProbability = rand() % 100;
-                            if (typeProbability <= JUMPSCARE_EPILEPSY) {
-                                type = JUMPSCARE_EPILEPSY;
+                            if (typeProbability <= config.chanceEpilepsy) {
                                 printf("epilepsy\n");
-                            } else if (typeProbability <= JUMPSCARE_ZOOM) {
-                                type = JUMPSCARE_ZOOM;
+                            } else if (typeProbability <= config.chanceZoom) {
+
                                 printf("zoom\n");
-                            } else if (typeProbability <= JUMPSCARE_FLASH) {
-                                type = JUMPSCARE_FLASH;
+                            } else if (typeProbability <= config.chanceFlash) {
                                 printf("flash\n");
                             } else {
-                                type = JUMPSCARE_NORMAL;
+                                //config.chanceNormal
                                 printf("normal :(\n");
                             }
                             isJumpscare = true; //activate jumpscare
