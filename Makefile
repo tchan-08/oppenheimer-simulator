@@ -1,8 +1,11 @@
+DEPS=sdl2 SDL2_image SDL2_mixer
+
 LIBS+=\
 	-lm \
-	$$(pkg-config --cflags --libs sdl2 SDL2_image SDL2_mixer) \
+	$$(pkg-config --libs $(DEPS)) \
 	-fsanitize=address -fsanitize=undefined
-CFLAGS+=-g -std=c11 -Wall -Wextra -Wpedantic
+CFLAGS+=-g -std=c11 -Wall -Wextra -Wpedantic\
+	$$(pkg-config --cflags $(DEPS)) \
 
 .PHONY: all clean
 
