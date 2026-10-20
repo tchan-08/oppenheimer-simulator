@@ -7,7 +7,13 @@
 #include <string.h>
 
 int parseConfig(struct ConfigFile *config) {
-	memset(config,0,sizeof(struct ConfigFile));
+	struct ConfigFile baseConfig = {
+		.chanceNormal = 45,
+		.chanceZoom = 20,
+		.chanceEpilepsy = 10,
+		.chanceFlash = 25,
+	};
+	memcpy(config,&baseConfig,sizeof(struct ConfigFile));
 	//open file
 	int configFile = open("configfile",O_RDONLY);
 	if (configFile < 0) {
@@ -50,10 +56,31 @@ int parseConfig(struct ConfigFile *config) {
 		if (strcmp(key,"interval") == 0) {
 			config->interval = strtol(value,NULL,10);
 		}
+		if (strcmp(key,"normal_chance") == 0) {
+			char *endptr = NULL;
+			long chance = strtol(value,&endptr,10);
+			if (*endptr == '\0') config->chanceNormal = chance;
+		}
+		if (strcmp(key,"flash_chance") == 0) {
+			char *endptr = NULL;
+			long chance = strtol(value,&endptr,10);
+			if (*endptr == '\0') config->chanceFlash = chance;
+		}
+		if (strcmp(key,"zoom_chance") == 0) {
+			char *endptr = NULL;
+			long chance = strtol(value,&endptr,10);
+			if (*endptr == '\0') config->chanceZoom = chance;
+		}
+		if (strcmp(key,"epilepsy_chance") == 0) {
+			char *endptr = NULL;
+			long chance = strtol(value,&endptr,10);
+			if (*endptr == '\0') config->chanceEpilepsy = chance;
+		}
 		//next iteration
 		line = newline;
 	}
 	//cleanup and return
 	close(configFile);
+	free(fileContents);
 	return 0;
 }

@@ -5,6 +5,10 @@
 
 struct ConfigFile {
 	char imageDir[1024]; //the directory with all the images in it
+	int chanceNormal;
+	int chanceZoom;
+	int chanceEpilepsy;
+	int chanceFlash;
 	time_t interval;
 };
 
