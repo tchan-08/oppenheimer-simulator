@@ -20,7 +20,7 @@ enum GuiLoadImageResult guiStateLoadImage(struct GuiState *state,
   return GUI_LOAD_IMAGE_SUCCESS;
 }
 
-enum GuiInitSdlResult guiSdlInit() {
+enum GuiInitSdlResult guiSdlInit(void) {
   int err = SDL_Init(SDL_INIT_VIDEO);
   if (err < 0) {
     return GUI_INIT_SDL_SDL_ERROR;

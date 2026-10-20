@@ -28,7 +28,7 @@ enum GuiLoadImageResult {
   GUI_LOAD_IMAGE_SUCCESS,
 };
 
-enum GuiInitSdlResult guiSdlInit();
+enum GuiInitSdlResult guiSdlInit(void);
 
 void guiStateInit(struct GuiState *state);
 enum GuiLoadImageResult guiStateLoadImage(struct GuiState *state,

@@ -1,2 +1,6 @@
 *.o
-oppenheimer-simulator
+/oppenheimer-simulator
+/build
+/bin
+/compile_commands.json
+/.cache
