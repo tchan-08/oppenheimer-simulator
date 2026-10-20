@@ -4,6 +4,14 @@
 #include <SDL2/SDL_mixer.h>
 #include <stdbool.h>
 
+
+#define WAVES_SOUND "assets/waves-at-baltic-sea-shore/waves-at-baltic-sea-shore.wav"
+
+#define CLAP_SOUND              "assets/claps-and-snares/clap.ogg"
+#define SNARE_SOUND             "assets/claps-and-snares/snare.ogg"
+#define TECHNO_CLAP_SNARE_SOUND "assets/claps-and-snares/techno-clap-snare.ogg"
+#define REVERB_SNARE_SOUND      "assets/claps-and-snares/dubstep-reverb-snare.ogg"
+
 #if defined linux && SDL_VERSION_ATLEAST(2, 0, 8)
     // Disable compositor bypass
     if(!SDL_SetHint(SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "0"))
