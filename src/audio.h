@@ -30,7 +30,10 @@ typedef struct AudioMixer {
     Mixer_t Mixer;
 } AudioMixer_t;
 
+#define CAN_YOU_HEAR_THE_MUSIC "assets/can-you-hear-the-music/'Can you Hear the Music' - Oppenheimer.mp3"
+
 void audio_mixer_int(AudioMixer_t* AudioMixer);
 void play_audio();
+void clean_up(AudioMixer_t* AudioMixer);
 
 #endif
