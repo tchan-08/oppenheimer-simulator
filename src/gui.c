@@ -84,7 +84,8 @@ void guiWindowShowImage(struct GuiWindow *window,
 }
 
 // TODO: put this in the main main
-int main(void) {
+
+int _main(void) {
   struct GuiState state;
   struct GuiWindow window;
 
@@ -114,8 +115,6 @@ int main(void) {
       if (e.type == SDL_WINDOWEVENT &&
           e.window.event == SDL_WINDOWEVENT_RESIZED)
         guiWindowShowImage(&window, &state);
-      if (e.type == SDL_KEYDOWN && e.key.keysym == ' ') {
-      }
     }
   }
 

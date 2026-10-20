@@ -8,7 +8,7 @@ all: bin/oppenheimer-simulator bin/config-test
 clean:
 	$(RM) bin/* build/*
 
-bin/oppenheimer-simulator : build/main.o build/config.o
+bin/oppenheimer-simulator : build/main.o build/config.o build/gui.o
 	mkdir -p bin
 	$(CC) -o $@ $^ $(CFLAGS)
 

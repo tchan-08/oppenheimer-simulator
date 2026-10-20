@@ -35,3 +35,5 @@ enum GuiLoadImageResult guiStateLoadImage(struct GuiState *state,
                                           SDL_Renderer *renderer, char *path);
 
 enum GuiInitWindowResult guiWindowInit(struct GuiWindow *window);
+
+void guiWindowShowImage(struct GuiWindow *window, const struct GuiState *state);
