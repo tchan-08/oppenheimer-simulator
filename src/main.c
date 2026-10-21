@@ -4,8 +4,12 @@
 #include <stdbool.h>
 #include <unistd.h>
 #include <string.h>
+#include "audio.h"
 #include "config.h"
 #include "gui.h"
+
+#define CAN_YOU_HEAR_THE_MUSIC "assets/can-you-hear-the-music/'Can you Hear the Music' - Oppenheimer.mp3"
+#define FOXY_JUMPSCARE "assets/audio/jumpscare-sounds/foxy-scream-fnaf-1.mp3"
 
 typedef struct ConfigFile ConfigFile;
 typedef struct dirent dirent;
@@ -21,6 +25,9 @@ int main () {
     srand(time(NULL));
     struct GuiState state;
     struct GuiWindow window;
+    AudioMixer_t AudioMixer;
+
+    audio_mixer_init(&AudioMixer);
 
     if (guiSdlInit() != GUI_INIT_SDL_SUCCESS) {
         return 1;
@@ -38,6 +45,8 @@ int main () {
     }
 
     guiWindowShowImage(&window, &state);
+
+    play_audio(CAN_YOU_HEAR_THE_MUSIC, &AudioMixer);
 
     int quit = 0;
     SDL_Event e;
@@ -106,7 +115,8 @@ int main () {
         }
         
     }
-
+    
+    clean_up(&AudioMixer);
     SDL_DestroyWindow(window.window);
     SDL_Quit();
 

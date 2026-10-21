@@ -6,6 +6,11 @@ void audio_mixer_init(AudioMixer_t* AudioMixer){
     AudioMixer->audio_channels = MIX_DEFAULT_CHANNELS;
     AudioMixer->audio_buffers = 4096;
 
+    AudioMixer->tag_title = NULL;
+    AudioMixer->tag_artist = NULL;
+    AudioMixer->tag_album = NULL;
+    AudioMixer->tag_copyright = NULL;
+
     if (SDL_Init(SDL_INIT_AUDIO) < 0) {
         SDL_Log("Couldn't initialize SDL: %s\n",SDL_GetError());
         return;
@@ -35,16 +40,13 @@ void audio_mixer_init(AudioMixer_t* AudioMixer){
 }
 
 
-void play_audio(){
+void play_audio(const char* file, AudioMixer_t* AudioMixer){
 
-    AudioMixer_t AudioMixer;
-
-    audio_mixer_int(&AudioMixer);
+    audio_mixer_init(AudioMixer);
 
     Mix_SetMusicCMD(SDL_getenv("MUSIC_CMD"));
 
-    AudioMixer.Mixer.music = Mix_LoadMUS_RW(SDL_RWFromFile(CAN_YOU_HEAR_THE_MUSIC, "rb"), SDL_TRUE);
-
+    AudioMixer->Mixer.music = Mix_LoadMUS_RW(SDL_RWFromFile(file,"rb"), SDL_TRUE);
 
 }
 
@@ -59,6 +61,7 @@ void clean_up(AudioMixer_t* AudioMixer)
         Mix_FreeMusic(AudioMixer->Mixer.music);
         AudioMixer->Mixer.music = NULL;
     }
+
     if (AudioMixer->Mixer.audio_open) {
         Mix_CloseAudio();
         AudioMixer->Mixer.audio_open = 0;

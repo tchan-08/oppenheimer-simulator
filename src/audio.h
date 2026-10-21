@@ -5,19 +5,20 @@
 #include <SDL2/SDL_main.h>
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_stdinc.h>
+#include <stdbool.h>
 
 typedef struct Mixer {
     Mix_Music* music;
-    int audio_open = 0;
+    bool audio_open;
     int next_track;
-}Mixer_t;
+} Mixer_t;
 
 typedef struct AudioMixer {
     int audio_rate;
     Uint16 audio_format;
     int audio_channels;
     int audio_buffers;
-    int audio_volume = MIX_MAX_VOLUME;
+    int audio_volume;
 
     const char *typ;
     const char *tag_title;
@@ -30,10 +31,9 @@ typedef struct AudioMixer {
     Mixer_t Mixer;
 } AudioMixer_t;
 
-#define CAN_YOU_HEAR_THE_MUSIC "assets/can-you-hear-the-music/'Can you Hear the Music' - Oppenheimer.mp3"
+void audio_mixer_init(AudioMixer_t* AudioMixer);
 
-void audio_mixer_int(AudioMixer_t* AudioMixer);
-void play_audio();
+void play_audio(const char* file, AudioMixer_t* AudioMixer);
 void clean_up(AudioMixer_t* AudioMixer);
 
 #endif
