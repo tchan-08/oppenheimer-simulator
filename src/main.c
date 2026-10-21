@@ -49,6 +49,9 @@ int main () {
     }
     guiWindowShowImage(&window, &state);
 
+	//============ custom events ============
+	Uint32 JUMPSCARE = SDL_RegisterEvents(1);
+	//
     int quit = 0;
     SDL_Event e;
     while (!quit) {
