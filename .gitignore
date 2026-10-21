@@ -1,6 +1,2 @@
-*.o
 /oppenheimer-simulator
 /build
-/bin
-/compile_commands.json
-/.cache

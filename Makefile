@@ -14,7 +14,7 @@ all: bin/oppenheimer-simulator bin/config-test
 clean:
 	$(RM) bin/* build/*
 
-bin/oppenheimer-simulator : build/main.o build/config.o build/gui.o
+bin/oppenheimer-simulator : build/main.o build/config.o build/gui.o build/audio.o
 	mkdir -p bin
 	$(CC) -o $@ $^ $(LIBS)
 

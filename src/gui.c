@@ -1,6 +1,7 @@
 #include "gui.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL_render.h>
 #include <stdbool.h>
 #include <stddef.h>
 
@@ -43,7 +44,9 @@ enum GuiInitWindowResult guiWindowInit(struct GuiWindow *window) {
   }
 
   window->renderer =
-      SDL_CreateRenderer(window->window, -1, SDL_RENDERER_ACCELERATED);
+      SDL_CreateRenderer(window->window, -1, 
+        SDL_RENDERER_ACCELERATED // SDL_RENDERER_SOFTWARE
+      );
   if (window->window == NULL) {
     return GUI_INIT_WINDOW_RENDERER_ERROR;
   }

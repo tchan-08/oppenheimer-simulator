@@ -15,7 +15,7 @@ int parseConfig(struct ConfigFile *config) {
 	};
 	memcpy(config,&baseConfig,sizeof(struct ConfigFile));
 	//open file
-	int configFile = open("configfile",O_RDONLY);
+	int configFile = open("../configfile",O_RDONLY);
 	if (configFile < 0) {
 		perror("open");
 		return 1;
@@ -26,14 +26,28 @@ int parseConfig(struct ConfigFile *config) {
 		perror("fstat");
 		close(configFile);
 		return 1;
-	}
+	}	
 	//read the whole file
 	size_t fileSize = statbuf.st_size;
-	char *fileContents = malloc(fileSize);
-	if (read(configFile, fileContents, fileSize) < 0) {
-		perror("read");
+	char *fileContents = malloc(fileSize + 1);
+
+	if (fileContents == NULL) {
+		perror("malloc");
 		close(configFile);
+		return 1;
 	}
+
+	ssize_t bytesRead = read(configFile, fileContents, fileSize);
+	if (bytesRead < 0) {
+		perror("read");
+		free(fileContents);
+		close(configFile);
+		return 1;
+	}
+
+	fileContents[bytesRead] = '\0';
+	close(configFile);
+
 	char *line = fileContents;
 	while(*line != '\0') {
 		//split by lines
