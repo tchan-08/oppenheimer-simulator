@@ -9,7 +9,7 @@
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [ "x86_64-linux" ];
       perSystem =
-        { pkgs, ... }:
+        { pkgs, lib, ... }:
         {
           devShells.default = pkgs.mkShell {
             nativeBuildInputs = with pkgs; [
@@ -21,6 +21,8 @@
               SDL2_mixer
               bear
             ];
+
+            env.LD_LIBRARY_PATH = lib.makeLibraryPath (with pkgs; [ sdl3 ]);
           };
         };
     };
