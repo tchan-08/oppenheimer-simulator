@@ -18,17 +18,17 @@ bin/oppenheimer-simulator : build/main.o build/config.o build/gui.o build/audio.
 	mkdir -p bin
 	$(CC) -o $@ $^ $(LIBS)
 
-bin/config-test : build/config.o src/config-test.c
+bin/config-test : build/config.o build/config-test.o
 	mkdir -p bin
 	$(CC) -o $@ $^ $(LIBS)
 
-bin/gui-test : build/gui.o src/gui-test.c
+bin/gui-test : build/gui.o build/gui-test.o
 	mkdir -p bin
 	$(CC) -o $@ $^ $(LIBS)
 
 build/config.o: src/config.c src/config.h
 build/gui.o: src/gui.c src/gui.h
-build/audio.o: src/audio.o src/audio.h
+build/audio.o: src/audio.c src/audio.h
 
 build/%.o: src/%.c
 	mkdir -p build
