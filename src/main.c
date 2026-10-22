@@ -142,6 +142,7 @@ int main () {
     }
     
     clean_up(&AudioMixer);
+    guiStateDeinit(&state);
     SDL_DestroyWindow(window.window);
     SDL_Quit();
 

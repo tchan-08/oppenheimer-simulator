@@ -1,4 +1,5 @@
 #include "gui.h"
+#include "SDL_render.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <stdbool.h>
@@ -10,6 +11,10 @@ void guiStateInit(struct GuiState *state) {
 
 enum GuiLoadImageResult guiStateLoadImage(struct GuiState *state,
                                           SDL_Renderer *renderer, char *path) {
+  if (state->texture != NULL) {
+    SDL_DestroyTexture(state->texture);
+  }
+
   state->texture = IMG_LoadTexture(renderer, path);
   if (state->texture == NULL) {
     return GUI_LOAD_IMAGE_ERROR;
@@ -18,6 +23,10 @@ enum GuiLoadImageResult guiStateLoadImage(struct GuiState *state,
   SDL_QueryTexture(state->texture, NULL, NULL, &state->width, &state->height);
 
   return GUI_LOAD_IMAGE_SUCCESS;
+}
+
+void guiStateDeinit(struct GuiState *state) {
+  SDL_DestroyTexture(state->texture);
 }
 
 enum GuiInitSdlResult guiSdlInit(void) {

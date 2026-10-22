@@ -31,6 +31,8 @@ enum GuiLoadImageResult {
 enum GuiInitSdlResult guiSdlInit(void);
 
 void guiStateInit(struct GuiState *state);
+void guiStateDeinit(struct GuiState *state);
+
 enum GuiLoadImageResult guiStateLoadImage(struct GuiState *state,
                                           SDL_Renderer *renderer, char *path);
 
