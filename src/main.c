@@ -30,7 +30,7 @@ int main () {
 	}
 	//=========== gui init ============
     srand(time(NULL));
-    struct GuiState state;
+    struct GuiImage image;
     struct GuiWindow window;
     AudioMixer_t AudioMixer;
 
@@ -39,15 +39,15 @@ int main () {
     if (guiSdlInit() != GUI_INIT_SDL_SUCCESS) {
         return EXIT_FAILURE;
     }
-    guiStateInit(&state);
+    guiImageInit(&image);
     if (guiWindowInit(&window) != GUI_INIT_WINDOW_SUCCESS) {
         return EXIT_FAILURE;
     }
-    if (guiStateLoadImage(&state, window.renderer, "assets/oppenheimer.jpg") !=
+    if (guiImageLoad(&image, window.renderer, "assets/oppenheimer.jpg") !=
         GUI_LOAD_IMAGE_SUCCESS) {
         return EXIT_FAILURE;
     }
-    guiWindowShowImage(&window, &state);
+    guiWindowShowImage(&window, &image);
 
 	//============ custom events ============
 	Uint32 JUMPSCARE = SDL_RegisterEvents(1);
@@ -142,9 +142,9 @@ int main () {
     }
     
     clean_up(&AudioMixer);
-    guiStateDeinit(&state);
-    SDL_DestroyWindow(window.window);
-    SDL_Quit();
+    guiImageDeinit(&image);
+    guiWindowDeinit(&window);
+    guiSdlDeinit();
 
     return EXIT_SUCCESS;
 }

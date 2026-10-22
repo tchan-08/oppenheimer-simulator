@@ -5,11 +5,11 @@
 #include <stdbool.h>
 #include <stddef.h>
 
-void guiStateInit(struct GuiState *state) {
+void guiImageInit(struct GuiImage *state) {
   state->texture = NULL;
 }
 
-enum GuiLoadImageResult guiStateLoadImage(struct GuiState *state,
+enum GuiLoadImageResult guiImageLoad(struct GuiImage *state,
                                           SDL_Renderer *renderer, char *path) {
   if (state->texture != NULL) {
     SDL_DestroyTexture(state->texture);
@@ -25,8 +25,9 @@ enum GuiLoadImageResult guiStateLoadImage(struct GuiState *state,
   return GUI_LOAD_IMAGE_SUCCESS;
 }
 
-void guiStateDeinit(struct GuiState *state) {
+void guiImageDeinit(struct GuiImage *state) {
   SDL_DestroyTexture(state->texture);
+  state->texture = NULL;
 }
 
 enum GuiInitSdlResult guiSdlInit(void) {
@@ -43,6 +44,11 @@ enum GuiInitSdlResult guiSdlInit(void) {
   return GUI_INIT_SDL_SUCCESS;
 }
 
+void guiSdlDeinit(void) {
+  IMG_Quit();
+  SDL_Quit();
+}
+
 enum GuiInitWindowResult guiWindowInit(struct GuiWindow *window) {
   window->window =
       SDL_CreateWindow("Oppenheimer Simulator", SDL_WINDOWPOS_UNDEFINED,
@@ -53,7 +59,7 @@ enum GuiInitWindowResult guiWindowInit(struct GuiWindow *window) {
 
   window->renderer =
       SDL_CreateRenderer(window->window, -1, SDL_RENDERER_ACCELERATED);
-  if (window->window == NULL) {
+  if (window->renderer == NULL) {
     return GUI_INIT_WINDOW_RENDERER_ERROR;
   }
 
@@ -63,11 +69,16 @@ enum GuiInitWindowResult guiWindowInit(struct GuiWindow *window) {
   return GUI_INIT_WINDOW_SUCCESS;
 }
 
+void guiWindowDeinit(struct GuiWindow *window) {
+  SDL_DestroyRenderer(window->renderer);
+  SDL_DestroyWindow(window->window);
+}
+
 #define GUI_MIN(a, b) ((a < b) ? (a) : (b))
 #define GUI_WINDOW_PADDING 50
 
 void guiWindowShowImage(struct GuiWindow *window,
-                        const struct GuiState *state) {
+                        const struct GuiImage *state) {
   int window_width;
   int window_height;
   SDL_GetWindowSize(window->window, &window_width, &window_height);
@@ -90,45 +101,4 @@ void guiWindowShowImage(struct GuiWindow *window,
   SDL_RenderClear(window->renderer);
   SDL_RenderCopy(window->renderer, state->texture, NULL, &imageRect);
   SDL_RenderPresent(window->renderer);
-}
-
-// TODO: put this in the main main
-
-int _main(void) {
-  struct GuiState state;
-  struct GuiWindow window;
-
-  if (guiSdlInit() != GUI_INIT_SDL_SUCCESS) {
-    return 1;
-  }
-
-  guiStateInit(&state);
-
-  if (guiWindowInit(&window) != GUI_INIT_WINDOW_SUCCESS) {
-    return 1;
-  }
-
-  if (guiStateLoadImage(&state, window.renderer, "assets/oppenheimer.jpg") !=
-      GUI_LOAD_IMAGE_SUCCESS) {
-    return 1;
-  }
-
-  guiWindowShowImage(&window, &state);
-
-  bool quit = false;
-  SDL_Event e;
-  while (!quit) {
-    while (SDL_PollEvent(&e)) {
-      if (e.type == SDL_QUIT)
-        quit = true;
-      if (e.type == SDL_WINDOWEVENT &&
-          e.window.event == SDL_WINDOWEVENT_RESIZED)
-        guiWindowShowImage(&window, &state);
-    }
-  }
-
-  SDL_DestroyWindow(window.window);
-  SDL_Quit();
-
-  return EXIT_SUCCESS;
 }

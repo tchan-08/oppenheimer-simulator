@@ -1,6 +1,6 @@
 #include <SDL2/SDL.h>
 
-struct GuiState {
+struct GuiImage {
   struct SDL_Texture *texture;
   int width;
   int height;
@@ -29,13 +29,15 @@ enum GuiLoadImageResult {
 };
 
 enum GuiInitSdlResult guiSdlInit(void);
+void guiSdlDeinit(void);
 
-void guiStateInit(struct GuiState *state);
-void guiStateDeinit(struct GuiState *state);
+void guiImageInit(struct GuiImage *state);
+void guiImageDeinit(struct GuiImage *state);
 
-enum GuiLoadImageResult guiStateLoadImage(struct GuiState *state,
+enum GuiLoadImageResult guiImageLoad(struct GuiImage *state,
                                           SDL_Renderer *renderer, char *path);
 
 enum GuiInitWindowResult guiWindowInit(struct GuiWindow *window);
+void guiWindowDeinit(struct GuiWindow *window);
 
-void guiWindowShowImage(struct GuiWindow *window, const struct GuiState *state);
+void guiWindowShowImage(struct GuiWindow *window, const struct GuiImage *state);

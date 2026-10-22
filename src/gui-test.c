@@ -4,22 +4,24 @@
 #include <stdlib.h>
 
 int main(void) {
-  struct GuiState state;
+  struct GuiImage state;
   struct GuiWindow window;
 
   if (guiSdlInit() != GUI_INIT_SDL_SUCCESS) {
-    return 1;
+    perror("failed to init SDL");
+    return EXIT_FAILURE;
   }
-
-  guiStateInit(&state);
 
   if (guiWindowInit(&window) != GUI_INIT_WINDOW_SUCCESS) {
-    return 1;
+    perror("failed to init window");
+    return EXIT_FAILURE;
   }
 
-  if (guiStateLoadImage(&state, window.renderer, "assets/oppenheimer.jpg") !=
+  guiImageInit(&state);
+  if (guiImageLoad(&state, window.renderer, "assets/oppenheimer.jpg") !=
       GUI_LOAD_IMAGE_SUCCESS) {
-    return 1;
+    perror("failed to load image");
+    return EXIT_FAILURE;
   }
 
   guiWindowShowImage(&window, &state);
@@ -28,16 +30,24 @@ int main(void) {
   SDL_Event e;
   while (!quit) {
     while (SDL_PollEvent(&e)) {
-      if (e.type == SDL_QUIT)
+      if (e.type == SDL_QUIT) {
         quit = true;
+      }
+
       if (e.type == SDL_WINDOWEVENT &&
-          e.window.event == SDL_WINDOWEVENT_RESIZED)
+          e.window.event == SDL_WINDOWEVENT_RESIZED) {
         guiWindowShowImage(&window, &state);
+      }
+
+      if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_q) {
+        quit = true;
+      }
     }
   }
 
-  SDL_DestroyWindow(window.window);
-  SDL_Quit();
+  guiImageDeinit(&state);
+  guiWindowDeinit(&window);
+  guiSdlDeinit();
 
   return EXIT_SUCCESS;
 }

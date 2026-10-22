@@ -16,13 +16,25 @@
               gnumake
               clang
               pkg-config
-              SDL2
-              SDL2_image
-              SDL2_mixer
               bear
             ];
 
-            env.LD_LIBRARY_PATH = lib.makeLibraryPath (with pkgs; [ sdl3 ]);
+            buildInputs = with pkgs; [
+              vulkan-loader
+              libGL
+              SDL2
+              SDL2_image
+              SDL2_mixer
+            ];
+
+            env.LD_LIBRARY_PATH = lib.makeLibraryPath (
+              with pkgs;
+              [
+                sdl3
+                vulkan-loader
+                libGL
+              ]
+            );
           };
         };
     };
