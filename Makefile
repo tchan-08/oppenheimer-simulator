@@ -9,12 +9,12 @@ CFLAGS+=-g -std=c11 -Wall -Wextra -Wpedantic\
 
 .PHONY: all clean
 
-all: bin/oppenheimer-simulator bin/config-test
+all: bin/oppenheimer-simulator bin/config-test bin/gui-test
 
 clean:
 	$(RM) bin/* build/*
 
-bin/oppenheimer-simulator : build/main.o build/config.o build/gui.o
+bin/oppenheimer-simulator : build/main.o build/config.o build/gui.o build/audio.o
 	mkdir -p bin
 	$(CC) -o $@ $^ $(LIBS)
 
@@ -22,8 +22,13 @@ bin/config-test : build/config.o src/config-test.c
 	mkdir -p bin
 	$(CC) -o $@ $^ $(LIBS)
 
+bin/gui-test : build/gui.o src/gui-test.c
+	mkdir -p bin
+	$(CC) -o $@ $^ $(LIBS)
+
 build/config.o: src/config.c src/config.h
 build/gui.o: src/gui.c src/gui.h
+build/audio.o: src/audio.o src/audio.h
 
 build/%.o: src/%.c
 	mkdir -p build
