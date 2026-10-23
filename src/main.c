@@ -29,6 +29,16 @@ typedef enum jumpscareType {
   JUMPSCARE_NORMAL
 } jumpscareType;
 
+typedef enum JumpscareStatus {
+  JUMPSCARE,
+  IDLE
+} JumpscareStatus;
+
+unsigned setJumpscare(unsigned int _, void *status){
+  *(JumpscareStatus *)status = JUMPSCARE;
+  return 0;
+}
+
 int main(void) {
   //============ config read ============
   ConfigFile config;
@@ -68,8 +78,9 @@ int main(void) {
   } // open directory stream
   //============ custom events ============
   Uint32 JUMPSCARE = SDL_RegisterEvents(1);
-  //
   bool quit = false;
+  JumpscareStatus appStatus = IDLE;
+  SDL_AddTimer(1000, setJumpscare, &appStatus);
   while (!quit) {
     //============ process sdl events ============
     SDL_Event event;
@@ -81,15 +92,18 @@ int main(void) {
       quit = true;
     }
     //============ should we jumpscare ============
-    if (event.type == JUMPSCARE) {
+    if (appStatus == JUMPSCARE) {
+      //do jumpscare
+      SDL_AddTimer(1000, setJumpscare, &appStatus);
+      appStatus = IDLE;
       switch (event.user.code) {
       case JUMPSCARE_NORMAL:
         // normal
-	    if (guiImageLoad(&image, window.renderer, "assets/oppenheimer.jpg") !=
-		  GUI_LOAD_IMAGE_SUCCESS) {
-	  	  return EXIT_FAILURE;
-	  	}
-	  	guiWindowShowImage(&window, &image);
+        if (guiImageLoad(&image, window.renderer, "assets/oppenheimer.jpg") !=
+        GUI_LOAD_IMAGE_SUCCESS) {
+          return EXIT_FAILURE;
+        }
+        guiWindowShowImage(&window, &image);
         playAudio(FOXY_JUMPSCARE, &audioMixer);
         break;
       case JUMPSCARE_EPILEPSY:
