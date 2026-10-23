@@ -8,9 +8,9 @@
 #include <string.h>
 #include <unistd.h>
 
-#define CAN_YOU_HEAR_THE_MUSIC                                                 \
-  "assets/can-you-hear-the-music/'Can you Hear the Music' - Oppenheimer.mp3"
-#define FOXY_JUMPSCARE "assets/audio/jumpscare-sounds/foxy-scream-fnaf-1.mp3"
+#define CAN_YOU_HEAR_THE_MUSIC "../assets/audio/can-you-hear-the-music/Can you Hear the Music - Oppenheimer.mp3"
+#define FOXY_JUMPSCARE "../assets/audio/jumpscare-sounds/foxy-scream-fnaf-1.mp3"
+#define SMILE_DOG_JUMPSCARE "../assets/audio/jumpscare-sounds/jeremayjimenez-smile-dog-jumpscare-167171.mp3"
 
 typedef struct ConfigFile ConfigFile;
 typedef struct dirent dirent;
@@ -50,6 +50,9 @@ int main(void) {
     return EXIT_FAILURE;
   }
   guiWindowShowImage(&window, &image);
+
+  //=========== CAN YOU HEAR THE MUSIC? ============
+  play_audio(CAN_YOU_HEAR_THE_MUSIC, &AudioMixer);	
 
   //============ custom events ============
   Uint32 JUMPSCARE = SDL_RegisterEvents(1);
