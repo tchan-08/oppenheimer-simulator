@@ -90,7 +90,7 @@ int main(void) {
 	  	  return EXIT_FAILURE;
 	  	}
 	  	guiWindowShowImage(&window, &image);
-        playAudio(FOXY_JUMPSCARE, &AudioMixer);
+        playAudio(FOXY_JUMPSCARE, &audioMixer);
         break;
       case JUMPSCARE_EPILEPSY:
         // epilepsy
