@@ -8,6 +8,9 @@
 #include <string.h>
 #include <unistd.h>
 
+//gang what the freak is 
+//holy sloppington
+
 #define CAN_YOU_HEAR_THE_MUSIC                                                 \
   "assets/can-you-hear-the-music/'Can you Hear the Music' - Oppenheimer.mp3"
 #define FOXY_JUMPSCARE "assets/audio/jumpscare-sounds/foxy-scream-fnaf-1.mp3"
@@ -88,7 +91,6 @@ int main(void) {
 
 	//============ custom events ============
 	Uint32 JUMPSCARE = SDL_RegisterEvents(1);
-	//
     int quit = 0;
     SDL_Event e;
     while (!quit) {
@@ -170,6 +172,9 @@ int main(void) {
 			}
         }
 	}
-	return EXIT_SUCCESS;
-	}
+  }
+  return EXIT_SUCCESS;
+}
+
+int guiInit(void) {
 }
