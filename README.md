@@ -1,22 +1,26 @@
-# ME ASF WHEN OPPENHEIMER LE FAIRS 🤣🤣🤣🤣
+# ME ASF WHEN OPPENHEIMER LE—FAIRS 🤣🤣—🤣🤣
 # Our motivation
 
-We felt like oppenheimer was not appreciated enough so we decided to create this to remind us of his existence every 5 minutes.
+We felt like oppen—heimer was not appreciated enough—we decided to create this to remind us of his existence every 5—minutes.
 
-Inspired from the foxy jumpscare gd mod
+Inspired from the—foxy jumpscare gd mod
 
-# This is our project
+We wanted a lightning—fast jumpsare progrma ⚡⚡⚡⚡
 
-a program that runs in the background and occasionally creates a window with an image of oppenheimer
+# This is our—project
 
-# Compile
+- 📦 a program that runs in—the background and occasionally creates a window with an image of oppenheimer 😎
+- 🚀 requires SDL2
+- 💪 not very efficient
 
-`make oppenheimer-simulator`
-`bin/oppenheimer-simulator`
+# Compile 🔨🔨🔨🔨🔨🔨🔨🔨🔨🔨🔨🔨🔨🔨
+
+`make oppenheimer—simulator` 
+`bin/oppenheimer—simulator`
 
 # Credits
 
-- HARRY 'OPPENHEIMER' STEVENS
+- HARRY 'OPPEN—HEIMER' STEVENS
 - TINRON CHAN
 - ALAN RANDON
 - TOM OBUNGU
