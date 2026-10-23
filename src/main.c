@@ -41,9 +41,10 @@ int main(void) {
   srand(time(NULL));
   struct GuiImage image;
   struct GuiWindow window;
-  AudioMixer_t AudioMixer;
+  AudioMixer audioMixer;
 
-  audioMixerInit(&AudioMixer);
+  if(audioMixerInit(&audioMixer) != AUDIO_MIXER_SUCCESS)
+    return EXIT_FAILURE;
 
   if (guiSdlInit() != GUI_INIT_SDL_SUCCESS) {
     return EXIT_FAILURE;
@@ -59,7 +60,7 @@ int main(void) {
   guiWindowShowImage(&window, &image);
 
   //=========== CAN YOU HEAR THE MUSIC? ============
-  playAudio(CAN_YOU_HEAR_THE_MUSIC, &AudioMixer);
+  playAudio(CAN_YOU_HEAR_THE_MUSIC, &audioMixer);
   //============ open the directory ============
   DIR *dir;
   if ((dir = opendir(config.imageDir)) == NULL) {

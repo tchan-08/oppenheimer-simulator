@@ -7,33 +7,29 @@
 #include <SDL2/SDL_stdinc.h>
 #include <stdbool.h>
 
+typedef enum AudioMixerStatus {
+    AUDIO_MIXER_FAILURE,
+    AUDIO_MIXER_SUCCESS
+} AudioMixerStatus;
+
 typedef struct Mixer {
     Mix_Music* music;
     bool audio_open;
-    // int next_track;
-} Mixer_t;
+} Mixer;
 
 typedef struct AudioMixer {
-    int audio_rate;
-    Uint16 audio_format;
-    int audio_channels;
-    int audio_buffers;
-    int audio_volume;
+    int audioRate;
+    Uint16 audioFormat;
+    int audioChannels;
+    int audioBuffers;
+    int audioVolume;
 
-    // const char *typ;
-    // const char *tag_title;
-    // const char *tag_artist;
-    // const char *tag_album;
-    // const char *tag_copyright;
+    Mixer mixer;
+} AudioMixer;
 
-    // double loop_start, loop_end, loop_length, current_position;
+AudioMixerStatus audioMixerInit(AudioMixer* audioMixer);
 
-    Mixer_t Mixer;
-} AudioMixer_t;
-
-bool audioMixerInit(AudioMixer_t* AudioMixer);
-
-void playAudio(const char* file, AudioMixer_t* AudioMixer);
-void cleanUp(AudioMixer_t* AudioMixer);
+void playAudio(const char* file, AudioMixer* audioMixer);
+void cleanUp(AudioMixer* audioMixer);
 
 #endif
