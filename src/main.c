@@ -12,11 +12,11 @@
 // holy sloppington
 
 #define CAN_YOU_HEAR_THE_MUSIC                                                 \
-  "../assets/audio/can-you-hear-the-music/Can you Hear the Music - "           \
+  "assets/audio/can-you-hear-the-music/Can you Hear the Music - "           \
   "Oppenheimer.mp3"
-#define FOXY_JUMPSCARE "../assets/audio/jumpscare-sounds/foxy-scream-fnaf-1.mp3"
+#define FOXY_JUMPSCARE "assets/audio/jumpscare-sounds/foxy-scream-fnaf-1.mp3"
 #define SMILE_DOG_JUMPSCARE                                                    \
-  "../assets/audio/jumpscare-sounds/"                                          \
+  "assets/audio/jumpscare-sounds/"                                          \
   "jeremayjimenez-smile-dog-jumpscare-167171.mp3"
 
 typedef struct ConfigFile ConfigFile;

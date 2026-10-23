@@ -22,7 +22,6 @@ bool audioMixerInit(AudioMixer_t* AudioMixer) {
             AudioMixer->audio_buffers
         ) < 0) {
         SDL_Log("Couldn't open audio: %s", Mix_GetError());
-        SDL_Quit();
         return false;
     }
 
