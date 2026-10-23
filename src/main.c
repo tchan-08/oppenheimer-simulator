@@ -60,20 +60,23 @@ int main(void) {
 
   //=========== CAN YOU HEAR THE MUSIC? ============
   playAudio(CAN_YOU_HEAR_THE_MUSIC, &AudioMixer);
-
+  //============ open the directory ============
+  DIR *dir;
+  if ((dir = opendir(config.imageDir)) == NULL) {
+    perror("opendir(config.imageDir) == NULL\n"); // check if directory exists
+  } // open directory stream
   //============ custom events ============
   Uint32 JUMPSCARE = SDL_RegisterEvents(1);
   //
   bool quit = false;
-  SDL_Event e;
   while (!quit) {
     //============ process sdl events ============
-    SDL_Event event = {0};
+    SDL_Event event;
     if (SDL_WaitEvent(&event) != 1) {
       fprintf(stderr, "SDL_WaitEvent: %s\n", SDL_GetError());
       return EXIT_FAILURE;
     }
-    if (e.type == SDL_QUIT) {
+    if (event.type == SDL_QUIT) {
       quit = true;
     }
     //============ should we jumpscare ============
@@ -99,11 +102,7 @@ int main(void) {
     int jumpscareProbability = 25;
     bool isJumpscare = false; // flag condition for jumpscare
     char currImg;
-    DIR *dir;
     dirent *dp;
-    if ((dir = opendir(config.imageDir)) == NULL) {
-      perror("opendir(config.imageDir) == NULL\n"); // check if directory exists
-    } // open directory stream
     struct dirent *currFile =
         readdir(dir); // read directory stream, get pointer to image
     printf("got file success\n");
@@ -146,5 +145,6 @@ int main(void) {
       rewinddir(dir); // reset directory stream as we reached the end of the dir
     }
   }
+  closedir(dir);
   return EXIT_SUCCESS;
 }
