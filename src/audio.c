@@ -1,7 +1,7 @@
 #include "audio.h"
 #include <SDL2/SDL_mixer.h>
 
-bool audio_mixer_init(AudioMixer_t* AudioMixer) {
+bool audioMixerInit(AudioMixer_t* AudioMixer) {
     AudioMixer->audio_rate = MIX_DEFAULT_FREQUENCY;
     AudioMixer->audio_format = MIX_DEFAULT_FORMAT;
     AudioMixer->audio_channels = MIX_DEFAULT_CHANNELS;
@@ -32,7 +32,7 @@ bool audio_mixer_init(AudioMixer_t* AudioMixer) {
     return true;
 }
 
-void clean_up(AudioMixer_t* AudioMixer) {
+void cleanUp(AudioMixer_t* AudioMixer) {
     if(Mix_PlayingMusic()) {
         Mix_FadeOutMusic(1500);
         SDL_Delay(1500);
@@ -47,11 +47,10 @@ void clean_up(AudioMixer_t* AudioMixer) {
         Mix_CloseAudio();
         AudioMixer->Mixer.audio_open = 0;
     }
-    SDL_Quit();
 }
 
-void play_audio(const char* file, AudioMixer_t* AudioMixer) {
-    if (!audio_mixer_init(AudioMixer)) {
+void playAudio(const char* file, AudioMixer_t* AudioMixer) {
+    if (!audioMixerInit(AudioMixer)) {
         return;
     }
 
@@ -59,12 +58,12 @@ void play_audio(const char* file, AudioMixer_t* AudioMixer) {
 
     if (AudioMixer->Mixer.music == NULL) {
         SDL_Log("Couldn't load '%s': %s", file, Mix_GetError());
-        clean_up(AudioMixer);
+        cleanUp(AudioMixer);
         return;
     }
 
     if (Mix_PlayMusic(AudioMixer->Mixer.music, -1) < 0) {
         SDL_Log("Couldn't play music: %s", Mix_GetError());
-        clean_up(AudioMixer);
+        cleanUp(AudioMixer);
     }
 }

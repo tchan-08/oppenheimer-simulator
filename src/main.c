@@ -43,7 +43,7 @@ int main(void) {
   struct GuiWindow window;
   AudioMixer_t AudioMixer;
 
-  audio_mixer_init(&AudioMixer);
+  audioMixerInit(&AudioMixer);
 
   if (guiSdlInit() != GUI_INIT_SDL_SUCCESS) {
     return EXIT_FAILURE;
@@ -59,7 +59,7 @@ int main(void) {
   guiWindowShowImage(&window, &image);
 
   //=========== CAN YOU HEAR THE MUSIC? ============
-  play_audio(CAN_YOU_HEAR_THE_MUSIC, &AudioMixer);
+  playAudio(CAN_YOU_HEAR_THE_MUSIC, &AudioMixer);
 
   //============ custom events ============
   Uint32 JUMPSCARE = SDL_RegisterEvents(1);
@@ -147,7 +147,4 @@ int main(void) {
     }
   }
   return EXIT_SUCCESS;
-}
-
-int guiInit(void) {
 }

@@ -31,9 +31,9 @@ typedef struct AudioMixer {
     Mixer_t Mixer;
 } AudioMixer_t;
 
-bool audio_mixer_init(AudioMixer_t* AudioMixer);
+bool audioMixerInit(AudioMixer_t* AudioMixer);
 
-void play_audio(const char* file, AudioMixer_t* AudioMixer);
-void clean_up(AudioMixer_t* AudioMixer);
+void playAudio(const char* file, AudioMixer_t* AudioMixer);
+void cleanUp(AudioMixer_t* AudioMixer);
 
 #endif
