@@ -85,6 +85,12 @@ int main(void) {
       switch (event.user.code) {
       case JUMPSCARE_NORMAL:
         // normal
+	    if (guiImageLoad(&image, window.renderer, "assets/oppenheimer.jpg") !=
+		  GUI_LOAD_IMAGE_SUCCESS) {
+	  	  return EXIT_FAILURE;
+	  	}
+	  	guiWindowShowImage(&window, &image);
+        playAudio(FOXY_JUMPSCARE, &AudioMixer);
         break;
       case JUMPSCARE_EPILEPSY:
         // epilepsy
